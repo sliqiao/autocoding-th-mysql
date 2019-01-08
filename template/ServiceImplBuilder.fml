@@ -1,0 +1,60 @@
+/******************************************************************************
+* Copyright (C) 2016 Personal LiQiao All Rights Reserved. 
+* 未经本人正式书面同意，其他任何个人、团体不得使用、复制、修改或发布本软件.
+ *****************************************************************************/
+ 
+package ${package}.service.impl;
+
+import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ${package}.model.${entityName};
+import ${package}.service.${entityName}Service;
+
+/**
+ * @title 本代码由Autocoding生成
+ * @author  ${author}
+ * @date    ${date}
+ * @description:  
+ * @log:    ${date}  ${author}  新建
+ */
+public class ${entityName}ServiceImpl implements ${entityName}Service{
+ 
+	private static final Logger LOGGER = LoggerFactory.getLogger(${entityName}ServiceImpl.class);
+	 
+	@Override
+	public int delete(${pkField.propertyType} ${pkField.propertyName}) {
+		LOGGER.info("执行方法${entityName}ServiceImpl.delete()： ${pkField.propertyName}=>" + ${pkField.propertyName});
+		return 1;
+	}
+	
+	@Override
+	public int delete(${pkField.propertyType}[] ${pkField.propertyName}_array) {
+        LOGGER.info("执行方法${entityName}ServiceImpl.delete()： ${pkField.propertyName}_array=>" + ${pkField.propertyName}_array);
+        for (String ${pkField.propertyName} : ${pkField.propertyName}_array) {
+            LOGGER.info(" ${pkField.propertyName}_array=>" + ${pkField.propertyName}_array);
+            this.delete(${pkField.propertyName});
+        }
+        return ${pkField.propertyName}_array.length;
+    }
+
+	@Override
+	public ${entityName} insert(${entityName} ${entityBeanName}) {
+		LOGGER.info("执行方法${entityName}ServiceImpl.insert()： ${entityBeanName}=>" + ${entityBeanName});
+		<#--请自己生成主键ID-->
+		return ${entityBeanName};
+	}
+
+	@Override
+	public ${entityName} update(${entityName} ${entityBeanName}) {
+		LOGGER.info("执行方法${entityName}ServiceImpl.update()： ${entityBeanName}=>" + ${entityBeanName});
+		return ${entityBeanName};
+	}
+ 
+	@Override
+	public ${entityName} view(${pkField.propertyType} ${pkField.propertyName}) {
+		LOGGER.info("执行${entityName}ServiceImpl.view()： ${pkField.propertyName}=>" + ${pkField.propertyName});
+		return null;
+	}
+
+}

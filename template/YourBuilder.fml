@@ -1,0 +1,54 @@
+/******************************************************************************
+* Copyright (C) 2016 Personal LiQiao All Rights Reserved. 
+* 未经本人正式书面同意，其他任何个人、团体不得使用、复制、修改或发布本软件.
+ *****************************************************************************/
+package ${package}.model;
+
+import java.util.Date;
+
+/**
+ * @title 本代码由Autocoding生成
+ * @author  ${author}
+ * @date    ${date}
+ * @description:  
+ * @log:    ${date}  ${author}  新建
+ */
+public class ${entity.entityName}  {
+      
+      <#--主键-->
+        /**  ${pkField.fieldDes}  */
+       private ${pkField.propertyType} m_${pkField.propertyName};
+      <#--属性-->
+       <#list fields as field>  
+        <#if field.propertyName!=pkField.propertyName>
+         /**  ${field.fieldDes}  */
+         private ${field.propertyType} m_${field.propertyName};
+        </#if>
+     </#list>   
+	 
+     <#--默认无参构造器-->
+    public ${entity.entityName}() {
+    }
+  <#--生成 主键getter和setter-->
+   ${pkField.getter}
+   ${pkField.setter}
+    <#--生成 getter和setter-->
+	<#list fields as field>  
+	   <#if field.propertyName!=pkField.propertyName>
+          ${field.getter}
+          ${field.setter}
+          ${field.buildStr}
+       </#if>
+    </#list>   
+	  <#--重写toSring方法-->
+    ${entity.toStr}
+	 
+    public interface FieldConstant {
+         <#--属性-->
+       <#list fields as field>  
+         /**  ${field.fieldDes}  */
+        public static final  String ${field.propertyName} =  "${field.propertyName}";
+     </#list>   
+ 
+ }
+}

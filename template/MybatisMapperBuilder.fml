@@ -1,0 +1,32 @@
+/******************************************************************************
+* Copyright (C) 2016 Personal LiQiao All Rights Reserved. 
+* 未经本人正式书面同意，其他任何个人、团体不得使用、复制、修改或发布本软件.
+ *****************************************************************************/
+ 
+package ${package}.service;
+
+import java.util.Map;
+import ${package}.model.${entity.entityName};
+import com.th.supcom.framework.mybatis.domain.PageBounds;
+import com.th.supcom.framework.mybatis.domain.PageList;
+
+/**
+ * @title 本代码由Autocoding生成
+ * @author  ${author}
+ * @date    ${date}
+ * @description:  
+ * @log:    ${date}  ${author}  新建
+ */
+public interface ${entity.entityName}Mapper {
+
+	 
+	public void insert(${entityName} ${entityBeanName}) ;
+	 
+	public void update(${entityName} ${entityBeanName});
+	 
+	public ${entityName} view(${pkField.propertyType} ${pkField.propertyName}) ;
+	 
+	public int delete(${pkField.propertyType} ${pkField.propertyName});
+	
+	public PageList<${entityName}> getListWithPaging(${entityName} ${entityBeanName}, PageBounds pageBounds);
+}

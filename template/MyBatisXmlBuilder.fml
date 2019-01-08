@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="${package}.service.${entity.entityName}Mapper">
+	 
+	<resultMap id="${entity.entityName}Map" type="${entity.entityName}">
+	      <result property="${pkField.propertyName}" column="${pkField.fieldName}"/>
+       <#list fields as field>  
+        <#if field.propertyName!=pkField.propertyName>
+          <result property="${field.propertyName}"   column="${field.fieldName}" />
+        </#if>
+       </#list>  
+	</resultMap>
+
+	<sql id="allColumns">
+		    ${pkField.fieldName}
+        <#list fields as field>  
+         <#if field.propertyName!=pkField.propertyName>
+           ,${field.fieldName}
+        </#if>
+        </#list>  
+	</sql>
+	
+    <sql id="dynamicWhere">
+       <trim prefix="WHERE" prefixOverrides="AND|OR">
+		   <#if pkField.jdbcType=='VARCHAR'>
+                 <if test="${pkField.propertyName} != null and ${pkField.propertyName} != '' ">
+           <#else>
+                 <if test="${pkField.propertyName} != null">
+           </#if>
+                  AND ${pkField.fieldName} = ${r'#{'}${pkField.propertyName},jdbcType=${pkField.jdbcType}${r'}'}
+                 </if>
+           <#list fields as field>  
+           <#if field.propertyName != pkField.propertyName>
+              <#if field.jdbcType=='VARCHAR'>
+                 <if test="${field.propertyName} != null and ${field.propertyName} != '' ">
+              <#else>
+                 <if test="${field.propertyName} != null">
+             </#if>
+                  AND ${field.fieldName} = ${r'#{'}${field.propertyName},jdbcType=${field.jdbcType}${r'}'}
+                 </if>
+        </#if>
+          </#list>  
+		</trim>
+    </sql>
+    
+    <select id="select" resultMap="${entity.entityName}Map" parameterType="${entity.entityName}">
+		SELECT	 
+		<include refid="allColumns" />
+		FROM ${entity.tableName}
+		<include refid="dynamicWhere" />
+		   
+	</select>
+    
+	<select id="view" parameterType="${pkField.propertyType}" resultMap="${entity.entityName}Map">
+		SELECT 
+		<include refid="allColumns" /> 
+		FROM ${entity.tableName} 
+		WHERE ${pkField.fieldName} = ${r'#{'}${pkField.propertyName},jdbcType=${pkField.jdbcType}${r'}'}
+	</select>
+	
+   <insert id="insert" parameterType="${entity.entityName}" >
+    INSERT INTO ${entity.tableName} (<include refid="allColumns" />)
+    VALUES 
+    ( 
+      ${r'#{'}${pkField.propertyName},,jdbcType=${pkField.jdbcType}${r'}'}
+        <#list fields as field>  
+          <#if field.propertyName!=pkField.propertyName>
+     ,${r'#{'}${field.propertyName},jdbcType=${field.jdbcType}${r'}'}
+          </#if>
+        </#list> 
+    )
+  </insert>
+
+   <update id="update" parameterType="${entity.entityName}" >
+      UPDATE ${entity.tableName} 
+      <set>
+           <#list fields as field>  
+           <#if field.jdbcType=='VARCHAR'>
+                 <if test="${field.propertyName} != null and ${field.propertyName} != '' ">
+           <#else>
+                 <if test="${field.propertyName} != null">
+           </#if>
+                      ${field.fieldName} = ${r'#{'}${field.propertyName},jdbcType=${field.jdbcType}${r'}'},
+                 </if>
+               
+          </#list> 
+      </set>
+    WHERE ${pkField.fieldName} = ${r'#{'}${pkField.propertyName},jdbcType=${pkField.jdbcType}${r'}'}
+  </update>
+  
+  <delete id="delete" parameterType="${pkField.propertyType}" >
+      DELETE FROM ${entity.tableName}  WHERE ${pkField.fieldName} = ${r'#{'}${pkField.propertyName},jdbcType=${pkField.jdbcType}${r'}'}
+  </delete>
+</mapper>

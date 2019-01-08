@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="${entity.entityName}">
+
+<typeAlias alias="${entity.entityName}" type="${package}.model.${entity.entityName}"/>
+
+    <resultMap id="${entity.entityName}Map" class="${entity.entityName}">
+        <result property="${pkField.propertyName}" column="${pkField.fieldName}"/>
+       <#list fields as field>  
+      <result property="${field.propertyName}" column="${field.fieldName}"/>
+        </#list>  
+    </resultMap>
+
+    <sql id="allColumns">
+        ${pkField.fieldName}
+        <#list fields as field>,${field.fieldName}</#list>  
+    </sql>
+
+    <sql id="dynamicWhere">
+        <isNotEmpty prepend="AND" property="${pkField.propertyName}">
+              ${pkField.fieldName} = #${pkField.propertyName}#
+           </isNotEmpty>
+        <#list fields as field>  
+           <isNotEmpty prepend="AND" property="${field.propertyName}">
+              ${field.fieldName} = #${field.propertyName}#
+           </isNotEmpty>
+        </#list>  
+       
+    </sql>
+
+    <!-- select -->
+    <select id="select" parameterClass="java.util.HashMap" resultMap="${entity.entityName}Map">
+      SELECT <include refid="allColumns" />  FROM ${entity.tableName}
+      <dynamic prepend="WHERE">
+         <include refid="dynamicWhere"/>
+      </dynamic>
+      <dynamic prepend="ORDER BY">
+         <isNotEmpty property="fieldSort"> $fieldSort$ </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <!-- view -->
+    <select id="view" parameterClass="java.lang.String"  resultMap="${entity.entityName}Map">
+      SELECT <include refid="allColumns" />
+      FROM ${entity.tableName} WHERE ${pkField.fieldName} = #${pkField.propertyName}#
+    </select>
+
+    <!-- insert -->
+    <insert id="insert" parameterClass="${entity.entityName}">
+      INSERT INTO ${entity.tableName} (<include refid="allColumns" />) 
+      VALUES(
+       #${pkField.propertyName}#
+        <#list fields as field>  
+             ,#${field.propertyName}#
+        </#list>  
+        )
+    </insert>
+
+    <!-- update -->
+    <update id="update" parameterClass="${entity.entityName}">
+      UPDATE ${entity.tableName} 
+      <dynamic prepend="SET">
+       <#list fields as field>  
+           <isNotEmpty prepend="," property="${field.propertyName}">${field.fieldName}=#${field.propertyName}#</isNotEmpty>
+        </#list>  
+ 
+      </dynamic>
+      WHERE  ${pkField.fieldName}=#${pkField.propertyName}#
+    </update>
+
+    <!-- delete -->
+    <delete id="delete" parameterClass="java.lang.String">
+      DELETE FROM ${entity.tableName} WHERE ${pkField.fieldName} = #${pkField.propertyName}#
+    </delete>
+
+</sqlMap>

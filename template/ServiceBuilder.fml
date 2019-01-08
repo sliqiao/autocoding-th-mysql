@@ -1,0 +1,58 @@
+/******************************************************************************
+* Copyright (C) 2016 Personal LiQiao All Rights Reserved. 
+* 未经本人正式书面同意，其他任何个人、团体不得使用、复制、修改或发布本软件.
+ *****************************************************************************/
+ 
+package ${package}.service;
+
+import java.util.Map;
+
+import ${package}.model.${entityName};
+import com.autocoding.common.page.PageInfo;
+import com.autocoding.common.page.PageList;
+
+/**
+ * @title 本代码由Autocoding生成
+ * @author  ${author}
+ * @date    ${date}
+ * @description:  
+ * @log:    ${date}  ${author}  新建
+ */
+public interface ${entityName}Service {
+ 
+	
+	/**
+	 * 新增
+	 * @param ${entityBeanName} 查询对象
+	 * @return 新增后的对象
+	 */
+	public ${entityName} insert(${entityName} ${entityBeanName}) ;
+	
+	/**
+	 * 修改
+	 * @param ${entityBeanName} 修改对象
+	 * @return 更新后的对象
+	 */
+	public void update(${entityName} ${entityBeanName});
+	
+	/**
+	 * 查看
+	 * @param ${pkField.propertyName} 主键
+	 * @return 查询对象
+	 */
+	public ${entityName} view(${pkField.propertyType} ${pkField.propertyName}) ;
+	
+	/**
+	 * 批量删除
+	 * @param ${pkField.propertyName}_array 批量删除对象
+	 * @return 删除结果数量
+	 */
+	public int delete(${pkField.propertyType}[] ${pkField.propertyName}_array);
+	
+	/**
+	 * 删除
+	 * @param ${pkField.propertyName} 主键
+	 * @return 删除结果数量
+	 */
+	public int delete(${pkField.propertyType} ${pkField.propertyName});
+}
