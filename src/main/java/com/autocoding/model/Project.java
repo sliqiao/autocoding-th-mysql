@@ -7,6 +7,7 @@ import java.util.Date;
 import org.apache.commons.lang.StringUtils;
 
 import com.autocoding.util.MyStringUtil;
+import com.autocoding.util.MyStringUtil.GetSeperatedPathFromPackageParameter;
 
 public class Project {
 
@@ -67,7 +68,7 @@ public class Project {
 
 		this.srcPath = this.outputPath + "src" + File.separator;
 
-		this.rootPackagePath = this.srcPath + MyStringUtil.getSeperatedPathFromPackage(this.rootPackage);
+		this.rootPackagePath = this.srcPath + MyStringUtil.getSeperatedPathFromPackage(new GetSeperatedPathFromPackageParameter (this.rootPackage));
 		this.jspRootPath = this.projPath + "WebRoot" + File.separator + "WEB-INF" + File.separator + "pages"
 				+ File.separator;
 		this.jsRootPath = this.projPath + "WebRoot" + File.separator + "js" + File.separator;

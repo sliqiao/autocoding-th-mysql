@@ -16,7 +16,7 @@ import com.autocoding.freemarker.FreemarkerTag;
 public class CodeBuilderContainer {
 	private static Logger s_logger = LoggerFactory.getLogger(CodeBuilderContainer.class);
 
-	public static String getTempleateFileName(Class codeBuilderClass) {
+	public static String getTempleateFileName(Class<?> codeBuilderClass) {
 		if (null == codeBuilderClass) {
 			CodeBuilderContainer.s_logger.error("codeBuilderClass不能为空!");
 		}

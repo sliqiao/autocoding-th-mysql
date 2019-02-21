@@ -9,9 +9,9 @@ import java.util.Date;
 /**
  * @title 本代码由Autocoding生成
  * @author  QiaoLi
- * @date    2019-01-04 14:06:17
+ * @date    2019-01-09 14:09:40
  * @description:  
- * @log:    2019-01-04 14:06:17  QiaoLi  新建
+ * @log:    2019-01-09 14:09:40  QiaoLi  新建
  */
 public class TUser  {
       
