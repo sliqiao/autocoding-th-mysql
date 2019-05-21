@@ -1,1 +1,0 @@
-# autocoding-th-mysql
